@@ -2,7 +2,11 @@
 _pycache_/
 *.pyc
 .venv/
+.vscode/
+sync_source
+tmp_sync_source
 chart.py
 edgar-AlknQO5aHfM-unsplash.jpg
 eonforge_revenue_ebitda.png
 eonforge_revenue_ebitda.png.meta.json
+deployment.md
