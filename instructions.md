@@ -88,3 +88,70 @@ python lambda_assistant.py schedule list --function ec2-scheduler
 
 Delete schedule
 python lambda_assistant.py schedule delete <rule_name>
+
+Container helper commands (`container_assistant.py`)
+
+ECS: Register task definition from JSON template
+python container_assistant.py ecs register ecs_task_definition.json
+
+ECS: Update service with new task definition
+python container_assistant.py ecs update-service my-cluster my-service --task-definition my-task:2
+python container_assistant.py ecs update-service my-cluster my-service --desired-count 5 --force-deploy
+
+ECS: Scale service (change desired task count)
+python container_assistant.py ecs scale my-cluster my-service 10
+
+ECS: List services in cluster
+python container_assistant.py ecs list-services my-cluster
+
+ECS: List tasks in cluster
+python container_assistant.py ecs list-tasks my-cluster
+python container_assistant.py ecs list-tasks my-cluster --service my-service
+
+ECS: Stop a running task
+python container_assistant.py ecs stop-task my-cluster abc123def456 --reason "Manual stop"
+
+EKS: Connect to cluster (update kubeconfig)
+python container_assistant.py eks connect my-cluster --region ap-south-1
+python container_assistant.py eks connect my-cluster --region ap-south-1 --alias my-cluster-prod
+
+EKS: Get cluster information
+python container_assistant.py eks info my-cluster
+
+EKS: Apply Kubernetes manifest
+python container_assistant.py eks apply deployment.yaml
+python container_assistant.py eks apply deployment.yaml --namespace production
+
+EKS: Delete resources from manifest
+python container_assistant.py eks delete deployment.yaml --namespace production
+
+EKS: List pods
+python container_assistant.py eks pods
+python container_assistant.py eks pods --namespace production
+python container_assistant.py eks pods --all-namespaces
+
+Docker: Build image from Dockerfile
+python container_assistant.py docker build Dockerfile my-app:v1.0
+python container_assistant.py docker build Dockerfile my-app:latest --no-cache
+
+Docker: Tag image
+python container_assistant.py docker tag my-app:latest my-app:v1.0
+python container_assistant.py docker tag my-app:latest 123456789012.dkr.ecr.ap-south-1.amazonaws.com/my-app:latest
+
+Docker: Push image to registry
+python container_assistant.py docker push my-app:latest
+python container_assistant.py docker push 123456789012.dkr.ecr.ap-south-1.amazonaws.com/my-app:latest
+
+ECR: Create repository
+python container_assistant.py ecr create-repo my-app
+python container_assistant.py ecr create-repo my-app --immutable --no-scan
+
+ECR: Login to Amazon ECR
+python container_assistant.py ecr login
+
+ECR: List images in repository
+python container_assistant.py ecr list-images my-app
+
+ECR: Complete build-to-ECR push flow (build -> create repo -> login -> tag -> push)
+python container_assistant.py ecr push-flow Dockerfile my-app --tag v1.0
+python container_assistant.py ecr push-flow Dockerfile my-app --tag latest --repository my-app-prod

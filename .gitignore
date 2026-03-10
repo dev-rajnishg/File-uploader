@@ -46,3 +46,17 @@ ec2_profiles.yml
 
 # Local implementation notes (private)
 IMPLEMENTATION_NOTES.local.md
+
+# Container deployment artifacts and local configs
+ecs_task_definition.json
+ecs_task_definition.yaml
+Dockerfile
+!Dockerfile.example
+k8s_deployment.yaml
+k8s_deployment.yml
+k8s_*.yaml
+k8s_*.yml
+!k8s_deployment.example.yaml
+*.local.dockerfile
+docker-compose.local.yml
+.dockerignore
