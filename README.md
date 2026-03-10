@@ -1,8 +1,8 @@
-# AWS Utility Toolkit (Version 1)
+# AWS Assistant Toolkit (Version 1)
 
 A practical Python toolkit for day-to-day AWS operations with a focus on speed, safety, and fewer manual console steps.
 
-This project currently includes:
+**Expanding to more AWS services** - currently includes:
 - S3 operations (`uploader.py`)
 - EC2 operations (`aws_assistant.py` + `aws-assistant.cmd`)
 
