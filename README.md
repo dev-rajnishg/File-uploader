@@ -1,6 +1,6 @@
-# AWS Assistant Toolkit (Version 1)
+# AWS Assistant Toolkit (Version 1.1)
 
-A practical Python toolkit for day-to-day AWS operations with a focus on speed, safety, and fewer manual console steps.
+A practical Python toolkit for day-to-day AWS operations, built for public developer use with a focus on speed, safety, and fewer manual console steps.
 
 **Expanding to more AWS services** - currently includes:
 - S3 operations (`uploader.py`)
@@ -16,7 +16,7 @@ Managing common AWS tasks directly in the console is repetitive and error-prone,
 - launching repeatable instances from standardized settings
 - syncing local folders to S3 with clear behavior
 
-Version 1 wraps these operations in simple commands that are easier to repeat, document, and automate.
+Version 1.1 wraps these operations in simple commands that are easier to repeat, document, and automate, and now includes a full Lambda workflow (create, deploy, test, and schedule).
 
 ## Features
 ### S3 (`uploader.py`)
@@ -45,6 +45,15 @@ Version 1 wraps these operations in simple commands that are easier to repeat, d
 - Create EventBridge schedules for recurring Lambda invocations
 - List and delete scheduled Lambda jobs
 
+## Release Notes
+### v1.1.0 (2026-03-10)
+- Added `lambda_assistant.py` with end-to-end Lambda flows: create, package/deploy, test invoke, and schedule management.
+- Added Lambda-focused test coverage in `tests/test_lambda_assistant.py` plus supporting test organization under `tests/`.
+- Added `setup/` helper scripts for IAM role setup and Lambda handler/account utilities.
+- Added `lambda_demo/handler.py` and `test_events/` examples for reproducible local demos.
+- Updated docs (`README.md`, `instructions.md`, `LAMBDA_WORKFLOW_DEMO.md`) and dependencies (`requirements.txt`).
+- Refined `.gitignore` for a public developer repository: keep examples/tests in git, ignore local secrets and build artifacts.
+
 ## Project Layout
 - `uploader.py`: S3 command-line utility (all platforms)
 - `aws_assistant.py`: EC2 command-line utility (all platforms)
@@ -56,12 +65,11 @@ Version 1 wraps these operations in simple commands that are easier to repeat, d
 - `test_events/`: example Lambda test event files
 - `instructions.md`: quick command cookbook
 - `requirements.txt`: Python dependencies
-- `requirements.txt`: Python dependencies
-- `tests/`: Unit test files (gitignored)
+- `tests/`: Unit test files
   - `test_lambda_assistant.py`: Lambda assistant unit tests (20 tests)
   - `test_aws_assistant_ec2.py`: EC2 assistant unit tests  
   - `test_lambda.py`: Legacy Lambda tests
-- `setup/`: One-time AWS account setup scripts (gitignored)
+- `setup/`: One-time AWS account setup scripts
   - `setup_lambda_role.py`: Creates IAM execution role for Lambda
   - `get_aws_info.py`: Retrieves AWS account and role information
   - `update_handler.py`: Updates Lambda handler configuration
