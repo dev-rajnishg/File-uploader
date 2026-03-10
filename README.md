@@ -5,6 +5,7 @@ A practical Python toolkit for day-to-day AWS operations with a focus on speed, 
 **Expanding to more AWS services** - currently includes:
 - S3 operations (`uploader.py`)
 - EC2 operations (`aws_assistant.py`)
+- Lambda deployment & scheduling (`lambda_assistant.py`)
 
 **Cross-platform support:** Works on Windows, Linux, and macOS.
 
@@ -34,15 +35,36 @@ Version 1 wraps these operations in simple commands that are easier to repeat, d
 - `key=value` shorthand support for faster command entry
 - Windows wrapper command: `aws-assistant ...`
 
+### Lambda (`lambda_assistant.py`)
+- Create new Lambda functions with custom runtime, memory, timeout
+- Package Lambda code with dependencies into deployment zip
+- Deploy code to existing Lambda functions
+- Update environment variables from config file
+- Test Lambda functions with saved JSON event files
+- Display CloudWatch logs with test results
+- Create EventBridge schedules for recurring Lambda invocations
+- List and delete scheduled Lambda jobs
+
 ## Project Layout
 - `uploader.py`: S3 command-line utility (all platforms)
 - `aws_assistant.py`: EC2 command-line utility (all platforms)
+- `lambda_assistant.py`: Lambda deployment & scheduling utility (all platforms)
 - `aws-assistant.cmd`: Windows convenience wrapper
 - `aws-assistant`: Linux/Mac convenience wrapper (requires `chmod +x`)
 - `ec2_profiles.example.json`: launch profile template reference
+- `lambda_config.example.json`: Lambda deployment config template
+- `test_events/`: example Lambda test event files
 - `instructions.md`: quick command cookbook
 - `requirements.txt`: Python dependencies
-
+- `requirements.txt`: Python dependencies
+- `tests/`: Unit test files (gitignored)
+  - `test_lambda_assistant.py`: Lambda assistant unit tests (20 tests)
+  - `test_aws_assistant_ec2.py`: EC2 assistant unit tests  
+  - `test_lambda.py`: Legacy Lambda tests
+- `setup/`: One-time AWS account setup scripts (gitignored)
+  - `setup_lambda_role.py`: Creates IAM execution role for Lambda
+  - `get_aws_info.py`: Retrieves AWS account and role information
+  - `update_handler.py`: Updates Lambda handler configuration
 ## Prerequisites
 - Python 3.10+ (or `python3` on Linux/Mac)
 - AWS IAM credentials with required permissions for S3/EC2 operations
@@ -149,6 +171,59 @@ Windows wrapper:
 aws-assistant ec2 launch profile=dev-web config=ec2_profiles.example.json
 ```
 
+### Lambda Commands
+Create new Lambda function:
+```bash
+python lambda_assistant.py create <function_name> <role_arn>
+python lambda_assistant.py create my-function arn:aws:iam::123456789012:role/lambda-role --runtime python3.12 --memory 512 --timeout 60
+```
+
+Package and deploy:
+```bash
+python lambda_assistant.py deploy <function_name> --config lambda_config.json
+python lambda_assistant.py deploy <function_name> --source-dir lambda_ --requirements requirements.txt
+python lambda_assistant.py deploy <function_name> --config lambda_config.json --update-env
+```
+
+Test with event file:
+```bash
+python lambda_assistant.py test <function_name> test_events/s3_upload_event.json
+python lambda_assistant.py test <function_name> test_events/custom_event.json --tail
+python lambda_assistant.py test <function_name> test_events/custom_event.json --no-logs
+```
+
+Create scheduled Lambda:
+```bash
+python lambda_assistant.py schedule create <rule_name> <function_name> "rate(1 hour)"
+python lambda_assistant.py schedule create <rule_name> <function_name> "cron(0 22 * * ? *)" --description "Nightly cleanup"
+python lambda_assistant.py schedule create <rule_name> <function_name> "rate(1 day)" --event test_events/event.json
+```
+
+List and delete schedules:
+```bash
+python lambda_assistant.py schedule list
+python lambda_assistant.py schedule list --function <function_name>
+python lambda_assistant.py schedule delete <rule_name>
+```
+
+## Lambda Config Example
+Use `lambda_config.example.json` as a base:
+```json
+{
+  "functions": {
+    "my-function": {
+      "source_dir": "lambda_",
+      "requirements": "requirements.txt",
+      "output_zip": "dist/my-function.zip",
+      "environment": {
+        "TARGET_BUCKET": "my-bucket",
+        "LOG_LEVEL": "INFO"
+      }
+    }
+  }
+}
+```
+
 ## EC2 Profile Config Example
 Use `ec2_profiles.example.json` as a base:
 ```json
@@ -176,8 +251,10 @@ Use `ec2_profiles.example.json` as a base:
 - Use least-privilege IAM permissions.
 - Prefer `--name`/`--tag` selectors to reduce wrong-instance operations.
 - For root volume snapshot consistency, use `--stop-for-root-consistency` on running instances.
-- Keep local real profile configs private (`ec2_profiles.json`) and commit only examples.
+- Keep local real profile configs private (`ec2_profiles.json`, `lambda_config.json`) and commit only examples.
 - Always stop/terminate temporary EC2 test instances to avoid cost.
+- Test Lambda functions with sample events before creating schedules.
+- Keep test event files with sensitive data in gitignore.
 
 ## Comparison: Version 1 vs Previous Workflow
 ### Previous workflow (manual console + ad-hoc commands)

@@ -59,3 +59,32 @@ python aws_assistant.py ec2 launch profile=dev-web config=ec2_profiles.example.j
 
 Windows command wrapper (same folder):
 aws-assistant ec2 launch profile=dev-web config=ec2_profiles.example.json
+
+Lambda helper commands (`lambda_assistant.py`)
+Create a new Lambda function
+python lambda_assistant.py create demo-lambda-function arn:aws:iam::123456789012:role/lambda-role
+python lambda_assistant.py create my-function arn:aws:iam::123456789012:role/lambda-role --runtime python3.12 --memory 512 --timeout 60
+Package and deploy Lambda function
+python lambda_assistant.py deploy <function_name> --config lambda_config.json --update-env
+python lambda_assistant.py deploy <function_name> --source-dir lambda_ --requirements requirements.txt
+
+Test Lambda with event file
+python lambda_assistant.py test <function_name> test_events/s3_upload_event.json
+python lambda_assistant.py test <function_name> test_events/custom_event.json --tail
+
+Create scheduled Lambda invocation (EventBridge)
+Rate-based (every N time units):
+python lambda_assistant.py schedule create cleanup-hourly s3-cleanup "rate(1 hour)" --description "Hourly cleanup"
+
+Cron-based (specific times):
+python lambda_assistant.py schedule create stop-ec2-nightly ec2-scheduler "cron(0 22 * * ? *)" --description "Stop idle EC2 at 10 PM"
+
+With custom event payload:
+python lambda_assistant.py schedule create cleanup s3-cleanup "rate(6 hours)" --event test_events/cleanup_event.json
+
+List EventBridge schedules
+python lambda_assistant.py schedule list
+python lambda_assistant.py schedule list --function ec2-scheduler
+
+Delete schedule
+python lambda_assistant.py schedule delete <rule_name>

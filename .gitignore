@@ -3,8 +3,8 @@ __pycache__/
 *.pyc
 .venv/
 .vscode/
-sync_source
-tmp_sync_source
+sync_source/
+tmp_sync_source/
 tmp_sync_test/
 chart.py
 chart_*.py
@@ -13,11 +13,6 @@ edgar-AlknQO5aHfM-unsplash.jpg
 eonforge_revenue_ebitda.png
 eonforge_revenue_ebitda.png.meta.json
 deployment.md
-
-# Ignore hidden local files/folders by default, but keep Git metadata files tracked
-.*
-!.gitignore
-!.gitattributes
 
 # Python and pytest caches/artifacts
 .pytest_cache/
@@ -29,17 +24,23 @@ deployment.md
 htmlcov/
 coverage.xml
 
-# Local test scripts and logs
-test_*.py
-*_test.py
-*_spec.py
+# Runtime/debug logs
 *.log
+
+# Lambda deployment artifacts
+dist/
+*.zip
+lambda_config.json
+lambda_config.yaml
+lambda_config.yml
+*.local.json
+test_events/*.json
+!test_events/*.example.json
 
 # Local-only EC2 assistant config (keep example config committed)
 ec2_profiles.json
 ec2_profiles.yaml
 ec2_profiles.yml
-*.local.json
 *.local.yaml
 *.local.yml
 

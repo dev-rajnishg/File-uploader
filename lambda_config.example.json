@@ -1,0 +1,33 @@
+{
+  "functions": {
+    "image-processor": {
+      "source_dir": "lambda_",
+      "requirements": "requirements.txt",
+      "output_zip": "dist/image-processor.zip",
+      "environment": {
+        "TARGET_BUCKET": "my-processed-images",
+        "SNS_TOPIC_ARN": "arn:aws:sns:ap-south-1:123456789012:ProcessingComplete",
+        "LOG_LEVEL": "INFO"
+      }
+    },
+    "ec2-scheduler": {
+      "source_dir": "lambda_ec2_scheduler",
+      "requirements": "lambda_ec2_scheduler/requirements.txt",
+      "output_zip": "dist/ec2-scheduler.zip",
+      "environment": {
+        "TAG_KEY": "AutoStop",
+        "TAG_VALUE": "true",
+        "DRY_RUN": "false"
+      }
+    },
+    "s3-cleanup": {
+      "source_dir": "lambda_s3_cleanup",
+      "output_zip": "dist/s3-cleanup.zip",
+      "environment": {
+        "BUCKET_NAME": "my-logs-bucket",
+        "PREFIX": "logs/",
+        "RETENTION_DAYS": "90"
+      }
+    }
+  }
+}
