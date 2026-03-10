@@ -42,3 +42,6 @@ ec2_profiles.yml
 *.local.json
 *.local.yaml
 *.local.yml
+
+# Local implementation notes (private)
+IMPLEMENTATION_NOTES.local.md
