@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Cross-platform wrapper for aws_assistant.py (Linux/Mac)
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+VENV_PY="${SCRIPT_DIR}/.venv/bin/python"
+
+if [ -f "$VENV_PY" ]; then
+  "$VENV_PY" "${SCRIPT_DIR}/aws_assistant.py" "$@"
+else
+  python3 "${SCRIPT_DIR}/aws_assistant.py" "$@"
+fi

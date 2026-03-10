@@ -4,7 +4,9 @@ A practical Python toolkit for day-to-day AWS operations with a focus on speed, 
 
 **Expanding to more AWS services** - currently includes:
 - S3 operations (`uploader.py`)
-- EC2 operations (`aws_assistant.py` + `aws-assistant.cmd`)
+- EC2 operations (`aws_assistant.py`)
+
+**Cross-platform support:** Works on Windows, Linux, and macOS.
 
 ## Why This Exists
 Managing common AWS tasks directly in the console is repetitive and error-prone, especially for:
@@ -33,19 +35,22 @@ Version 1 wraps these operations in simple commands that are easier to repeat, d
 - Windows wrapper command: `aws-assistant ...`
 
 ## Project Layout
-- `uploader.py`: S3 command-line utility
-- `aws_assistant.py`: EC2 command-line utility
-- `aws-assistant.cmd`: Windows wrapper for EC2 utility
+- `uploader.py`: S3 command-line utility (all platforms)
+- `aws_assistant.py`: EC2 command-line utility (all platforms)
+- `aws-assistant.cmd`: Windows convenience wrapper
+- `aws-assistant`: Linux/Mac convenience wrapper (requires `chmod +x`)
 - `ec2_profiles.example.json`: launch profile template reference
 - `instructions.md`: quick command cookbook
 - `requirements.txt`: Python dependencies
 
 ## Prerequisites
-- Python 3.10+
+- Python 3.10+ (or `python3` on Linux/Mac)
 - AWS IAM credentials with required permissions for S3/EC2 operations
 - Network access to AWS APIs
 
 ## Setup
+
+### All Platforms
 1. Create and activate a virtual environment.
 2. Install dependencies:
 ```bash
@@ -62,7 +67,18 @@ AWS_REGION=ap-south-1
 python validate_aws_credentials.py
 ```
 
+### Linux/Mac Only: Enable Wrapper Script
+```bash
+chmod +x aws-assistant
+```
+
+After this, you can use `./aws-assistant` instead of `python aws_assistant.py`.
+
 ## How To Use
+
+**Note:** All commands work cross-platform. Use:
+- **Windows:** `python` or `aws-assistant.cmd`
+- **Linux/Mac:** `python3` or `./aws-assistant` (after chmod)
 ### S3 Commands
 Upload:
 ```bash
