@@ -181,6 +181,9 @@ After this, you can use `./aws-assistant` instead of `python aws_assistant.py`.
 
 ## How To Use
 
+Single-page command sheet for v2.0 release:
+- See COMMANDS_SHEET.md for all commands in one place.
+
 **Note:** All commands work cross-platform. Use:
 - **Windows:** `python` or `aws-assistant.cmd`
 - **Linux/Mac:** `python3` or `./aws-assistant` (after chmod)
