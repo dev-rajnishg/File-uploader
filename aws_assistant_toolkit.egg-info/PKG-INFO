@@ -1,3 +1,27 @@
+Metadata-Version: 2.4
+Name: aws-assistant-toolkit
+Version: 1.3.0
+Summary: Lightweight, beginner-friendly AWS assistant CLI with safer workflows than raw AWS CLI.
+Author: Rajnish Goyal
+Keywords: aws,cli,devops,cloud,boto3,assistant
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Operating System :: OS Independent
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Build Tools
+Classifier: Topic :: Utilities
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: boto3>=1.34.0
+Requires-Dist: python-dotenv>=1.0.0
+Requires-Dist: PyYAML>=6.0
+Provides-Extra: tui
+Requires-Dist: questionary>=2.0.1; extra == "tui"
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0.0; extra == "dev"
+Requires-Dist: build>=1.2.1; extra == "dev"
+Requires-Dist: twine>=5.1.1; extra == "dev"
+
 # AWS Assistant Toolkit (Version 1.3)
 
 A practical Python toolkit for day-to-day AWS operations, built for public developer use with a focus on speed, safety, and fewer manual console steps.

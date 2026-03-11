@@ -309,7 +309,7 @@ def _build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-if __name__ == "__main__":
+def main() -> int:
     parser = _build_parser()
     args = parser.parse_args()
 
@@ -323,9 +323,9 @@ if __name__ == "__main__":
             s3_key = sys.argv[3] if len(sys.argv) > 3 else None
             url = upload_file(file_path, bucket, s3_key)
             print(f"Uploaded: {url}")
-            raise SystemExit(0)
+            return 0
         parser.print_help()
-        raise SystemExit(1)
+        return 1
 
     if args.command == "upload":
         uploaded_url = upload_file(args.file_path, args.bucket, args.s3_key)
@@ -368,6 +368,16 @@ if __name__ == "__main__":
             f"  uploaded={summary['uploaded']}, downloaded={summary['downloaded']}, "
             f"deleted_local={summary['deleted_local']}, deleted_s3={summary['deleted_s3']}"
         )
+
+    return 0
+
+
+if __name__ == "__main__":
+    try:
+        raise SystemExit(main())
+    except (ValueError, RuntimeError, FileNotFoundError) as e:
+        print(f"Error: {e}")
+        raise SystemExit(1)
 
 
 

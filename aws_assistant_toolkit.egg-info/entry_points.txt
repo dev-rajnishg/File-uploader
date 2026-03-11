@@ -1,0 +1,5 @@
+[console_scripts]
+aws-assistant = aws_assistant:main
+aws-assistant-container = container_assistant:main
+aws-assistant-lambda = lambda_assistant:main
+aws-assistant-s3 = uploader:main
