@@ -616,6 +616,10 @@ spec:
 - No built-in automated snapshot retention cleanup yet
 
 ## Packaging And Release
+For GitHub Actions automation (CI, TestPyPI/PyPI publish, optional GHCR publish):
+
+- See GITHUB_RELEASE_SETUP.md
+
 Build package artifacts:
 ```bash
 python -m pip install build twine

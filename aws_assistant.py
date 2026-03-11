@@ -7,7 +7,20 @@ import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-import boto3
+try:
+    import boto3
+except ModuleNotFoundError as exc:
+    if exc.name == "boto3":
+        print(
+            "Missing dependency: boto3\n"
+            "Install project dependencies first:\n"
+            "  pip install -r requirements.txt\n"
+            "Or install as package:\n"
+            "  pip install .\n"
+            "  pip install '.[tui]'"
+        )
+        raise SystemExit(1)
+    raise
 from botocore.exceptions import BotoCoreError, ClientError
 from dotenv import load_dotenv
 import yaml
