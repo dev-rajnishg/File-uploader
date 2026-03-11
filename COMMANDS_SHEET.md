@@ -6,8 +6,8 @@ This is the one-file command reference for daily usage.
 
 Install from GitHub:
 
-pip install "git+https://github.com/dev-rajnishg/File-uploader.git"
-pip install "git+https://github.com/dev-rajnishg/File-uploader.git#egg=aws-assistant-toolkit[tui]"
+pip install "git+https://github.com/dev-rajnishg/AWS-Assistant-Toolkit.git"
+pip install "git+https://github.com/dev-rajnishg/AWS-Assistant-Toolkit.git.git#egg=aws-assistant-toolkit[tui]"
 
 Run help:
 
