@@ -45,18 +45,18 @@ jobs:
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.TEST_PYPI_API_TOKEN }}
-        run: python -m twine upload --repository testpypi dist/*
+        run: python -m twine upload --verbose --skip-existing --repository testpypi dist/*
 
       - name: Publish to PyPI (manual)
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.repository == 'pypi' }}
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-        run: python -m twine upload dist/*
+        run: python -m twine upload --verbose --skip-existing dist/*
 
       - name: Publish to PyPI (release)
         if: ${{ github.event_name == 'release' }}
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-        run: python -m twine upload dist/*
+        run: python -m twine upload --verbose --skip-existing dist/*
