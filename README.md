@@ -1,4 +1,4 @@
-# AWS Assistant Toolkit (Version 1.3)
+# AWS Assistant Toolkit (Version 2.0)
 
 A practical Python toolkit for day-to-day AWS operations, built for public developer use with a focus on speed, safety, and fewer manual console steps.
 
